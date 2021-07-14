@@ -1,5 +1,6 @@
 import pandas as pd
 import scipy.sparse as sp
+from operator import itemgetter
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer, TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 

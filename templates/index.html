@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Bootstrap CSS -->
+    <link href = "./static/index.css"  rel="stylesheet" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+
+    <title>Movie Recommender App</title>
+  </head>
+  <body>
+    <form for="{{url_for("index")}}" method = "post">
+      <div
+        class="container d-flex justify-content-center"
+        style="margin-top: 5rem"
+      >
+        <div class="form-group row">
+          <div class="col-xs-2">
+            <input
+              class="form-control"
+              name = "movie_name"
+              id="ex1"
+              type="text"
+              placeholder = "Enter the Name of the Movie Here"
+              style="padding-left: 4rem; padding-right: 4rem"
+            />
+          </div>
+          <div class="d-flex justify-content-center">
+            <button
+              type="submit"
+              class="btn btn-primary"
+              style="margin-top: 1rem; width: 50%"
+            >
+              Submit
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+    <div  class="container justify-content-center"
+        style="margin-top: 5rem"> 
+      {% block content %}
+      {% if upcoming != "None" %}
+          <h1 class="panel d-flex justify-content-center">Upcoming Movies</h1>
+ <div class="row row-cols-1 row-cols-md-3 g-4 panel">
+  <div class="col" style="height: 20%">
+    <div class="card h-50">
+       {% if upcoming[0]['poster_path'] is not none %}
+      <img src = {{ "https://image.tmdb.org/t/p/w500/" +  upcoming[0]['poster_path']}} class="card-img-top" alt="..." >
+      {% elif upcoming[0]['poster_path'] is  none %}
+      <img src = "https://previews.123rf.com/images/urfandadashov/urfandadashov1809/urfandadashov180901275/109135379-photo-not-available-vector-icon-isolated-on-transparent-background-photo-not-available-logo-concept.jpg" class = "card-img-top" alt="..." >
+      {% endif %}    
+      <div class="card-body">
+        <h5 class="card-title d-flex justify-content-center">{{ upcoming[0]['original_title'] }}</h5>
+        <p class="card-text d-flex justify-content-center"> <b> Genre - {{ upcoming[0]['genre_ids'][0]  }}</b>  </p>
+      </div>
+      <div class="card-footer">
+        <small class="text-muted d-flex justify-content-center">Released in {{ upcoming[0]['release_date'] }}</small>
+      </div>
+    </div>
+  </div>
+  <div class="col" style="height: 20%">
+    <div class="card h-100">
+      {% if upcoming[1]['poster_path'] is not none %}
+      <img src = {{ "https://image.tmdb.org/t/p/w500/" +  upcoming[1]['poster_path']}} class="card-img-top" alt="..." >
+      {% elif upcoming[1]['poster_path'] is  none %}
+      <img src = "https://previews.123rf.com/images/urfandadashov/urfandadashov1809/urfandadashov180901275/109135379-photo-not-available-vector-icon-isolated-on-transparent-background-photo-not-available-logo-concept.jpg" class = "card-img-top" alt="..." >
+      {% endif %}          <div class="card-body">
+        <h5 class="card-title d-flex justify-content-center"> {{ upcoming[1]['original_title'] }} </h5>
+        <p class="card-text d-flex justify-content-center"> <b> Genre - {{ upcoming[1]['genre_ids'][0]  }} </b>   </p>
+      </div>
+      <div class="card-footer">
+        <small class="text-muted d-flex justify-content-center">Released in {{ upcoming[1]['release_date'] }}</small>
+      </div>
+    </div>
+  </div>
+  <div class="col" style="height: 20%">
+    <div class="card h-100">
+      {% if upcoming[2]['poster_path'] is not none %}
+      <img src = {{ "https://image.tmdb.org/t/p/w500/" +  upcoming[2]['poster_path']}} class="card-img-top" alt="..." >
+      {% elif upcoming[2]['poster_path'] is  none %}
+      <img src = "https://previews.123rf.com/images/urfandadashov/urfandadashov1809/urfandadashov180901275/109135379-photo-not-available-vector-icon-isolated-on-transparent-background-photo-not-available-logo-concept.jpg" class = "card-img-top" alt="..." >
+      {% endif %}          <div class="card-body">
+        <h5 class="card-title d-flex justify-content-center"> {{ upcoming[2]['original_title'] }} </h5>
+        <p class="card-text d-flex justify-content-center"> <b> Genre - {{ upcoming[2]['genre_ids'][0]  }}</b>  </p>
+      </div>
+      <div class="card-footer">
+        <small class="text-muted d-flex justify-content-center">Released in {{ upcoming[2]['release_date'] }}</small>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row row-cols-1 row-cols-md-3 g-4 panel">
+  <div class="col" style="height: 20%">
+    <div class="card h-50">
+      {% if upcoming[3]['poster_path'] is not none %}
+      <img src = {{ "https://image.tmdb.org/t/p/w500/" +  upcoming[3]['poster_path']}} class="card-img-top" alt="..." >
+      {% elif upcoming[3]['poster_path'] is  none %}
+      <img src = "https://previews.123rf.com/images/urfandadashov/urfandadashov1809/urfandadashov180901275/109135379-photo-not-available-vector-icon-isolated-on-transparent-background-photo-not-available-logo-concept.jpg" class = "card-img-top" alt="..." >
+      {% endif %}          <div class="card-body">
+        <h5 class="card-title d-flex justify-content-center">{{ upcoming[3]['original_title'] }}</h5>
+        <p class="card-text d-flex justify-content-center"> <b> Genre - {{ upcoming[3]['genre_ids'][0]  }}</b> </p>
+      </div>
+      <div class="card-footer">
+        <small class="text-muted d-flex justify-content-center">Released in {{ upcoming[3]['release_date'] }}</small>
+      </div>
+    </div>
+  </div>
+  <div class="col" style="height: 20%">
+    <div class="card h-100">
+      {% if upcoming[4]['poster_path'] is not none %}
+      <img src = {{ "https://image.tmdb.org/t/p/w500/" +  upcoming[4]['poster_path']}} class="card-img-top" alt="..." >
+      {% elif upcoming[4]['poster_path'] is  none %}
+      <img src = "https://previews.123rf.com/images/urfandadashov/urfandadashov1809/urfandadashov180901275/109135379-photo-not-available-vector-icon-isolated-on-transparent-background-photo-not-available-logo-concept.jpg" class = "card-img-top" alt="..." >
+      {% endif %}          <div class="card-body">
+        <h5 class="card-title d-flex justify-content-center"> {{ upcoming[4]['original_title'] }} </h5>
+        <p class="card-text d-flex justify-content-center"> <b> Genre - {{ upcoming[4]['genre_ids'][0]  }}</b> </p>
+      </div>
+      <div class="card-footer">
+        <small class="text-muted d-flex justify-content-center">Released in {{ upcoming[4]['release_date'] }}</small>
+      </div>
+    </div>
+  </div>
+  <div class="col" style="height: 20%">
+    <div class="card h-100">
+      {% if upcoming[5]['poster_path'] is not none %}
+      <img src = {{ "https://image.tmdb.org/t/p/w500/" +  upcoming[5]['poster_path']}} class="card-img-top" alt="..." >
+      {% elif upcoming[5]['poster_path'] is  none %}
+      <img src = "https://previews.123rf.com/images/urfandadashov/urfandadashov1809/urfandadashov180901275/109135379-photo-not-available-vector-icon-isolated-on-transparent-background-photo-not-available-logo-concept.jpg" class = "card-img-top" alt="..." >
+      {% endif %}          <div class="card-body">
+        <h5 class="card-title d-flex justify-content-center"> {{ upcoming[5]['original_title'] }} </h5>
+        <p class="card-text d-flex justify-content-center"> <b> Genre - {{ upcoming[5]['genre_ids'][0]  }} </b> </p>
+      </div>
+      <div class="card-footer">
+        <small class="text-muted d-flex justify-content-center">Released in {{ upcoming[5]['release_date'] }}</small>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row row-cols-1 row-cols-md-3 g-4 panel">
+  <div class="col" style="height: 20%">
+    <div class="card h-50">
+      {% if upcoming[6]['poster_path'] is not none %}
+      <img src = {{ "https://image.tmdb.org/t/p/w500/" +  upcoming[6]['poster_path']}} class="card-img-top" alt="..." >
+      {% elif upcoming[6]['poster_path'] is  none %}
+      <img src = "https://previews.123rf.com/images/urfandadashov/urfandadashov1809/urfandadashov180901275/109135379-photo-not-available-vector-icon-isolated-on-transparent-background-photo-not-available-logo-concept.jpg" class = "card-img-top" alt="..." >
+      {% endif %}          <div class="card-body">
+        <h5 class="card-title d-flex justify-content-center">{{ upcoming[6]['original_title'] }}</h5>
+        <p class="card-text d-flex justify-content-center"> <b> Genre - {{ upcoming[6]['genre_ids'][0]  }} </b> </p>
+      </div>
+      <div class="card-footer">
+        <small class="text-muted d-flex justify-content-center">Released in {{ upcoming[6]['release_date'] }}</small>
+      </div>
+    </div>
+  </div>
+  <div class="col" style="height: 20%">
+    <div class="card h-100">
+      {% if upcoming[7]['poster_path'] is not none %}
+      <img src = {{ "https://image.tmdb.org/t/p/w500/" +  upcoming[7]['poster_path']}} class="card-img-top" alt="..." >
+      {% elif upcoming[7]['poster_path'] is  none %}
+      <img src = "https://previews.123rf.com/images/urfandadashov/urfandadashov1809/urfandadashov180901275/109135379-photo-not-available-vector-icon-isolated-on-transparent-background-photo-not-available-logo-concept.jpg" class = "card-img-top" alt="..." >
+      {% endif %}          <div class="card-body">
+        <h5 class="card-title d-flex justify-content-center"> {{ upcoming[7]['original_title'] }} </h5>
+        <p class="card-text d-flex justify-content-center"> <b> Genre - {{ upcoming[7]['genre_ids'][0]  }} </b> </p>
+      </div>
+      <div class="card-footer">
+        <small class="text-muted d-flex justify-content-center">Released in {{ upcoming[7]['release_date'] }}</small>
+      </div>
+    </div>
+  </div>
+  <div class="col" style="height: 20%">
+    <div class="card h-100">
+      {% if upcoming[8]['poster_path'] is not none %}
+      <img src = {{ "https://image.tmdb.org/t/p/w500/" +  upcoming[8]['poster_path']}} class="card-img-top" alt="..." >
+      {% elif upcoming[8]['poster_path'] is  none %}
+      <img src = "https://previews.123rf.com/images/urfandadashov/urfandadashov1809/urfandadashov180901275/109135379-photo-not-available-vector-icon-isolated-on-transparent-background-photo-not-available-logo-concept.jpg" class = "card-img-top" alt="..." >
+      {% endif %}      
+      <div class="card-body">
+        <h5 class="card-title d-flex justify-content-center"> {{ upcoming[8]['original_title'] }} </h5>
+        <p class="card-text d-flex justify-content-center"> <b> Genre - {{ upcoming[8]['genre_ids'][0]  }} </b> </p>
+      </div>
+      <div class="card-footer">
+        <small class="text-muted d-flex justify-content-center">Released in {{ upcoming[8]['release_date'] }}</small>
+      </div>
+    </div>
+  </div>
+</div>
+      {% endif %}
+      {% if users == "None1"  %}
+          <h1 class="panel d-flex justify-content-center">Sorry, we couldn't find any movies</h1> 
+      {% elif first != 'None' and users == 'None' %}
+        <div class = "container d-flex justify-content-center">
+          <div class="card mb-3" style="max-width: 540px;">
+            <div class="row g-1">
+              <div class="col-md-4">
+                <img src= {{ "https://image.tmdb.org/t/p/w500/" +  first['poster_path']}} class="img-fluid rounded-start" alt="..." style = "height: 200px; width: 100%; display: block;" >
+              </div>
+              <div class="col-md-8">
+                <div class="card-body">
+                  <h4 class="card-title d-flex justify-content-center" style = "margin-top: 2.5rem; margin-bottom: 1rem">{{ first['original_title'] }}</h4>
+                  <p class="card-text d-flex justify-content-center"> <b> Genre - {{ first['genre_ids'][0]  }} </b> </p>
+                  <p class="card-text d-flex justify-content-center"  style = "margin-top: -1rem"> <b> Released in {{ first['release_date']  }} </b> </p>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <h1 class="panel d-flex justify-content-center">Recommended Movies</h1>
+ <div class="row row-cols-1 row-cols-md-3 g-4 panel">
+  <div class="col" style="height: 20%">
+    <div class="card h-50">
+      {% if arr[0]['poster_path'] is not none %}
+      <img src = {{ "https://image.tmdb.org/t/p/w500/" +  arr[0]['poster_path']}} class="card-img-top" alt="..." >
+      {% elif arr[0]['poster_path'] is  none %}
+      <img src = "https://previews.123rf.com/images/urfandadashov/urfandadashov1809/urfandadashov180901275/109135379-photo-not-available-vector-icon-isolated-on-transparent-background-photo-not-available-logo-concept.jpg" class = "card-img-top" alt="..." >
+      {% endif %}
+      <div class="card-body">
+        <h5 class="card-title d-flex justify-content-center">{{ arr[0]['original_title'] }}</h5>
+        <p class="card-text d-flex justify-content-center"> <b> Genre - {{ arr[0]['genre_ids'][0]  }} </b> </p>
+      </div>
+      <div class="card-footer">
+        <small class="text-muted d-flex justify-content-center">Released in {{ arr[0]['release_date'] }}</small>
+      </div>
+    </div>
+  </div>
+  <div class="col" style="height: 20%">
+    <div class="card h-100">
+    {% if arr[1]['poster_path'] is not none %}
+      <img src = {{ "https://image.tmdb.org/t/p/w500/" +  arr[1]['poster_path']}} class="card-img-top" alt="..." >
+      {% elif arr[1]['poster_path'] is  none %}
+      <img src = "https://previews.123rf.com/images/urfandadashov/urfandadashov1809/urfandadashov180901275/109135379-photo-not-available-vector-icon-isolated-on-transparent-background-photo-not-available-logo-concept.jpg" class = "card-img-top" alt="..." >
+      {% endif %}      <div class="card-body">
+        <h5 class="card-title d-flex justify-content-center"> {{ arr[1]['original_title'] }} </h5>
+        <p class="card-text d-flex justify-content-center"> <b> Genre - {{ arr[1]['genre_ids'][0]  }} </b> </p>
+      </div>
+      <div class="card-footer">
+        <small class="text-muted d-flex justify-content-center">Released in {{ arr[1]['release_date'] }}</small>
+      </div>
+    </div>
+  </div>
+  <div class="col" style="height: 20%">
+    <div class="card h-100">
+      {% if arr[2]['poster_path'] is not none %}
+      <img src = {{ "https://image.tmdb.org/t/p/w500/" +  arr[2]['poster_path']}} class="card-img-top" alt="..." >
+      {% elif arr[2]['poster_path'] is  none %}
+      <img src = "https://previews.123rf.com/images/urfandadashov/urfandadashov1809/urfandadashov180901275/109135379-photo-not-available-vector-icon-isolated-on-transparent-background-photo-not-available-logo-concept.jpg" class = "card-img-top" alt="..." >
+      {% endif %}      <div class="card-body">
+        <h5 class="card-title d-flex justify-content-center"> {{ arr[2]['original_title'] }} </h5>
+        <p class="card-text d-flex justify-content-center"> <b> Genre - {{ arr[2]['genre_ids'][0]  }} </b> </p>
+      </div>
+      <div class="card-footer">
+        <small class="text-muted d-flex justify-content-center">Released in {{ arr[2]['release_date'] }}</small>
+      </div>
+    </div>
+  </div>
+</div>
+    <div class="row row-cols-1 row-cols-md-3 g-4 panel">
+  <div class="col" style="height: 20%">
+    <div class="card h-50">
+      {% if arr[3]['poster_path'] is not none %}
+      <img src = {{ "https://image.tmdb.org/t/p/w500/" +  arr[3]['poster_path']}} class="card-img-top" alt="..." >
+      {% elif arr[3]['poster_path'] is  none %}
+      <img src = "https://previews.123rf.com/images/urfandadashov/urfandadashov1809/urfandadashov180901275/109135379-photo-not-available-vector-icon-isolated-on-transparent-background-photo-not-available-logo-concept.jpg" class = "card-img-top" alt="..." >
+      {% endif %}     
+       <div class="card-body">
+        <h5 class="card-title d-flex justify-content-center">{{ arr[3]['original_title'] }}</h5>
+        <p class="card-text d-flex justify-content-center"> <b> Genre - {{ arr[3]['genre_ids'][0]  }} </b> </p>
+      </div>
+      <div class="card-footer">
+        <small class="text-muted d-flex justify-content-center">Released in {{ arr[3]['release_date'] }}</small>
+      </div>
+    </div>
+  </div>
+  <div class="col" style="height: 20%">
+    <div class="card h-100">
+      {% if arr[4]['poster_path'] is not none %}
+      <img src = {{ "https://image.tmdb.org/t/p/w500/" +  arr[4]['poster_path']}} class="card-img-top" alt="..." >
+      {% elif arr[4]['poster_path'] is  none %}
+      <img src = "https://previews.123rf.com/images/urfandadashov/urfandadashov1809/urfandadashov180901275/109135379-photo-not-available-vector-icon-isolated-on-transparent-background-photo-not-available-logo-concept.jpg" class = "card-img-top" alt="..." >
+      {% endif %}      <div class="card-body">
+        <h5 class="card-title d-flex justify-content-center"> {{ arr[4]['original_title'] }} </h5>
+        <p class="card-text d-flex justify-content-center"> <b> Genre - {{ arr[4]['genre_ids'][0]  }} </b> </p>
+      </div>
+      <div class="card-footer">
+        <small class="text-muted d-flex justify-content-center">Released in {{ arr[4]['release_date'] }}</small>
+      </div>
+    </div>
+  </div>
+  <div class="col" style="height: 20%">
+    <div class="card h-100">
+      {% if arr[5]['poster_path'] is not none %}
+      <img src = {{ "https://image.tmdb.org/t/p/w500/" +  arr[5]['poster_path']}} class="card-img-top" alt="..." >
+      {% elif arr[5]['poster_path'] is  none %}
+      <img src = "https://previews.123rf.com/images/urfandadashov/urfandadashov1809/urfandadashov180901275/109135379-photo-not-available-vector-icon-isolated-on-transparent-background-photo-not-available-logo-concept.jpg" class = "card-img-top" alt="..." >
+      {% endif %}      <div class="card-body">
+        <h5 class="card-title d-flex justify-content-center"> {{ arr[5]['original_title'] }} </h5>
+        <p class="card-text d-flex justify-content-center"> <b> Genre - {{ arr[5]['genre_ids'][0]  }} </b> </p>
+      </div>
+      <div class="card-footer">
+        <small class="text-muted d-flex justify-content-center">Released in {{ arr[5]['release_date'] }}</small>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row row-cols-1 row-cols-md-3 g-4 panel">
+  <div class="col" style="height: 20%">
+    <div class="card h-50">
+      {% if arr[6]['poster_path'] is not none %}
+      <img src = {{ "https://image.tmdb.org/t/p/w500/" +  arr[6]['poster_path']}} class="card-img-top" alt="..." >
+      {% elif arr[6]['poster_path'] is  none %}
+      <img src = "https://previews.123rf.com/images/urfandadashov/urfandadashov1809/urfandadashov180901275/109135379-photo-not-available-vector-icon-isolated-on-transparent-background-photo-not-available-logo-concept.jpg" class = "card-img-top" alt="..." >
+      {% endif %}      <div class="card-body">
+        <h5 class="card-title d-flex justify-content-center">{{ arr[6]['original_title'] }}</h5>
+        <p class="card-text d-flex justify-content-center"> <b> Genre - {{ arr[6]['genre_ids'][0]  }} </b> </p>
+      </div>
+      <div class="card-footer">
+        <small class="text-muted d-flex justify-content-center">Released in {{ arr[6]['release_date'] }}</small>
+      </div>
+    </div>
+  </div>
+  <div class="col" style="height: 20%">
+    <div class="card h-100">
+      {% if arr[7]['poster_path'] is not none %}
+      <img src = {{ "https://image.tmdb.org/t/p/w500/" +  arr[7]['poster_path']}} class="card-img-top" alt="..." >
+      {% elif arr[7]['poster_path'] is  none %}
+      <img src = "https://previews.123rf.com/images/urfandadashov/urfandadashov1809/urfandadashov180901275/109135379-photo-not-available-vector-icon-isolated-on-transparent-background-photo-not-available-logo-concept.jpg" class = "card-img-top" alt="..." >
+      {% endif %}      <div class="card-body">
+        <h5 class="card-title d-flex justify-content-center"> {{ arr[7]['original_title'] }} </h5>
+        <p class="card-text d-flex justify-content-center"> <b> Genre - {{ arr[7]['genre_ids'][0]  }} </b> </p>
+      </div>
+      <div class="card-footer">
+        <small class="text-muted d-flex justify-content-center">Released in {{ arr[7]['release_date'] }}</small>
+      </div>
+    </div>
+  </div>
+  <div class="col" style="height: 20%">
+    <div class="card h-100">
+      {% if arr[8]['poster_path'] is not none %}
+      <img src = {{ "https://image.tmdb.org/t/p/w500/" +  arr[8]['poster_path']}} class="card-img-top" alt="..." >
+      {% elif arr[8]['poster_path'] is  none %}
+      <img src = "https://previews.123rf.com/images/urfandadashov/urfandadashov1809/urfandadashov180901275/109135379-photo-not-available-vector-icon-isolated-on-transparent-background-photo-not-available-logo-concept.jpg" class = "card-img-top" alt="..." >
+      {% endif %}      <div class="card-body">
+        <h5 class="card-title d-flex justify-content-center"> {{ arr[8]['original_title'] }} </h5>
+        <p class="card-text d-flex justify-content-center"> <b> Genre - {{ arr[8]['genre_ids'][0]  }} </b> </p>
+      </div>
+      <div class="card-footer">
+        <small class="text-muted d-flex justify-content-center">Released in {{ arr[8]['release_date'] }}</small>
+      </div>
+    </div>
+  </div>
+</div>
+
+      {% elif first != "None" and users != "None"  %}
+        <div class = "container d-flex justify-content-center">
+          <div class="card mb-3" style="max-width: 540px;">
+            <div class="row g-1">
+              <div class="col-md-4">
+                <img src= {{ "https://image.tmdb.org/t/p/w500/" +  first['poster_path']}} class="img-fluid rounded-start" alt="..." style = "height: 200px; width: 100%; display: block" >
+              </div>
+              <div class="col-md-8">
+                <div class="card-body">
+                  <h4 class="card-title d-flex justify-content-center" style = "margin-top: 2rem;margin-bottom: 1rem">{{ first['original_title'] }}</h4>
+                  <p class="card-text d-flex justify-content-center"> <b> Genre - {{ first['genre_ids'][0] }} </b> </p>
+                  <p class="card-text d-flex justify-content-center" style = "margin-top: -1rem"> <b> Released in {{ first['release_date']  }} </b> </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class = "container">
+          {% if users|length() > 0 %}
+           <h1 class="panel d-flex justify-content-center">Recommended Movies</h1>
+ <div class="row row-cols-1 row-cols-md-3 g-4 panel">
+  <div class="col" style="height: 20%">
+    <div class="card h-100">
+      {% if users[0]['poster_path'] is not none %}
+      <img src = {{ "https://image.tmdb.org/t/p/w500/" +  users[0]['poster_path']}} class="card-img-top" alt="..." >
+      {% elif users[0]['poster_path'] is  none %}
+      <img src = "https://previews.123rf.com/images/urfandadashov/urfandadashov1809/urfandadashov180901275/109135379-photo-not-available-vector-icon-isolated-on-transparent-background-photo-not-available-logo-concept.jpg" class = "card-img-top" alt="..." >
+      {% endif %}
+      <div class="card-body">
+        <h5 class="card-title d-flex justify-content-center">{{ users[0]['original_title'] }}</h5>
+        <p class="card-text d-flex justify-content-center"> <b> Genre - {{ users[0]['genre_ids'][0]  }} </b> </p>
+      </div>
+      <div class="card-footer">
+        <small class="text-muted d-flex justify-content-center">Released in {{ users[0]['release_date'] }}</small>
+      </div>
+    </div>
+  </div>
+  <div class="col" style="height: 20%">
+    <div class="card h-100">
+      {% if users[1]['poster_path'] is not none %}
+      <img src = {{ "https://image.tmdb.org/t/p/w500/" +  users[1]['poster_path']}} class="card-img-top" alt="..." >
+      {% elif users[1]['poster_path'] is  none %}
+      <img src = "https://previews.123rf.com/images/urfandadashov/urfandadashov1809/urfandadashov180901275/109135379-photo-not-available-vector-icon-isolated-on-transparent-background-photo-not-available-logo-concept.jpg" class = "card-img-top" alt="..." >
+      {% endif %}      
+      <div class="card-body">
+        <h5 class="card-title d-flex justify-content-center"> {{ users[1]['original_title'] }} </h5>
+        <p class="card-text d-flex justify-content-center"> <b> Genre - {{ users[1]['genre_ids'][0]  }} </b> </p>
+      </div>
+      <div class="card-footer">
+        <small class="text-muted d-flex justify-content-center">Released in {{ users[1]['release_date'] }}</small>
+      </div>
+    </div>
+  </div>
+  <div class="col" style="height: 20%">
+    <div class="card h-100">
+      {% if users[2]['poster_path'] is not none %}
+      <img src = {{ "https://image.tmdb.org/t/p/w500/" +  users[2]['poster_path']}} class="card-img-top" alt="..." >
+      {% elif users[2]['poster_path'] is  none %}
+      <img src = "https://previews.123rf.com/images/urfandadashov/urfandadashov1809/urfandadashov180901275/109135379-photo-not-available-vector-icon-isolated-on-transparent-background-photo-not-available-logo-concept.jpg" class = "card-img-top" alt="..." >
+      {% endif %}      <div class="card-body">
+        <h5 class="card-title d-flex justify-content-center"> {{ users[2]['original_title'] }} </h5>
+        <p class="card-text d-flex justify-content-center"> <b> Genre - {{ users[2]['genre_ids'][0]  }}</b> </p>
+      </div>
+      <div class="card-footer">
+        <small class="text-muted d-flex justify-content-center">Released in {{ users[2]['release_date'] }}</small>
+      </div>
+    </div>
+  </div>
+</div>
+    <div class="row row-cols-1 row-cols-md-3 g-4 panel">
+  <div class="col" style="height: 20%">
+    <div class="card h-50">
+      {% if users[3]['poster_path'] is not none %}
+      <img src = {{ "https://image.tmdb.org/t/p/w500/" +  users[3]['poster_path']}} class="card-img-top" alt="..." >
+      {% elif users[3]['poster_path'] is  none %}
+      <img src = "https://previews.123rf.com/images/urfandadashov/urfandadashov1809/urfandadashov180901275/109135379-photo-not-available-vector-icon-isolated-on-transparent-background-photo-not-available-logo-concept.jpg" class = "card-img-top" alt="..." >
+      {% endif %}      <div class="card-body">
+        <h5 class="card-title d-flex justify-content-center">{{ users[3]['original_title'] }}</h5>
+        <p class="card-text d-flex justify-content-center"> <b> Genre - {{ users[3]['genre_ids'][0]  }} </b> </p>
+      </div>
+      <div class="card-footer">
+        <small class="text-muted d-flex justify-content-center">Released in {{ users[3]['release_date'] }}</small>
+      </div>
+    </div>
+  </div>
+  <div class="col" style="height: 20%">
+    <div class="card h-100">
+      {% if users[4]['poster_path'] is not none %}
+      <img src = {{ "https://image.tmdb.org/t/p/w500/" +  users[4]['poster_path']}} class="card-img-top" alt="..." >
+      {% elif users[4]['poster_path'] is  none %}
+      <img src = "https://previews.123rf.com/images/urfandadashov/urfandadashov1809/urfandadashov180901275/109135379-photo-not-available-vector-icon-isolated-on-transparent-background-photo-not-available-logo-concept.jpg" class = "card-img-top" alt="..." >
+      {% endif %}      <div class="card-body">
+        <h5 class="card-title d-flex justify-content-center"> {{ users[4]['original_title'] }} </h5>
+        <p class="card-text d-flex justify-content-center"> <b> Genre - {{ users[4]['genre_ids'][0]  }} </b> </p>
+      </div>
+      <div class="card-footer">
+        <small class="text-muted d-flex justify-content-center">Released in {{ users[4]['release_date'] }}</small>
+      </div>
+    </div>
+  </div>
+  <div class="col" style="height: 20%">
+    <div class="card h-100">
+      {% if users[5]['poster_path'] is not none %}
+      <img src = {{ "https://image.tmdb.org/t/p/w500/" +  users[5]['poster_path']}} class="card-img-top" alt="..." >
+      {% elif users[5]['poster_path'] is  none %}
+      <img src = "https://previews.123rf.com/images/urfandadashov/urfandadashov1809/urfandadashov180901275/109135379-photo-not-available-vector-icon-isolated-on-transparent-background-photo-not-available-logo-concept.jpg" class = "card-img-top" alt="..." >
+      {% endif %}     
+       <div class="card-body">
+        <h5 class="card-title d-flex justify-content-center"> {{ users[5]['original_title'] }} </h5>
+        <p class="card-text d-flex justify-content-center"> <b> Genre - {{ users[5]['genre_ids'][0]  }} </b> </p>
+      </div>
+      <div class="card-footer">
+        <small class="text-muted d-flex justify-content-center">Released in {{ users[5]['release_date'] }}</small>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row row-cols-1 row-cols-md-3 g-4 panel">
+  <div class="col" style="height: 20%">
+    <div class="card h-50">
+      {% if users[6]['poster_path'] is not none %}
+      <img src = {{ "https://image.tmdb.org/t/p/w500/" +  users[6]['poster_path']}} class="card-img-top" alt="..." >
+      {% elif users[6]['poster_path'] is  none %}
+      <img src = "https://previews.123rf.com/images/urfandadashov/urfandadashov1809/urfandadashov180901275/109135379-photo-not-available-vector-icon-isolated-on-transparent-background-photo-not-available-logo-concept.jpg" class = "card-img-top" alt="..." >
+      {% endif %}      
+      <div class="card-body">
+        <h5 class="card-title d-flex justify-content-center">{{ users[6]['original_title'] }}</h5>
+        <p class="card-text d-flex justify-content-center"> <b> Genre - {{ users[6]['genre_ids'][0]  }} </b> </p>
+      </div>
+      <div class="card-footer">
+        <small class="text-muted d-flex justify-content-center">Released in {{ users[6]['release_date'] }}</small>
+      </div>
+    </div>
+  </div>
+  <div class="col" style="height: 20%">
+    <div class="card h-100">
+      {% if users[7]['poster_path'] is not none %}
+      <img src = {{ "https://image.tmdb.org/t/p/w500/" +  users[7]['poster_path']}} class="card-img-top" alt="..." >
+      {% elif users[7]['poster_path'] is  none %}
+      <img src = "https://previews.123rf.com/images/urfandadashov/urfandadashov1809/urfandadashov180901275/109135379-photo-not-available-vector-icon-isolated-on-transparent-background-photo-not-available-logo-concept.jpg" class = "card-img-top" alt="..." >
+      {% endif %}      <div class="card-body">
+        <h5 class="card-title d-flex justify-content-center"> {{ users[7]['original_title'] }} </h5>
+        <p class="card-text d-flex justify-content-center"> <b> Genre - {{ users[7]['genre_ids'][0]  }} </b> </p>
+      </div>
+      <div class="card-footer">
+        <small class="text-muted d-flex justify-content-center">Released in {{ users[7]['release_date'] }}</small>
+      </div>
+    </div>
+  </div>
+  <div class="col" style="height: 20%">
+    <div class="card h-100">
+      {% if users[8]['poster_path'] is not none %}
+      <img src = {{ "https://image.tmdb.org/t/p/w500/" +  users[8]['poster_path']}} class="card-img-top" alt="..." >
+      {% elif users[8]['poster_path'] is  none %}
+      <img src = "https://previews.123rf.com/images/urfandadashov/urfandadashov1809/urfandadashov180901275/109135379-photo-not-available-vector-icon-isolated-on-transparent-background-photo-not-available-logo-concept.jpg" class = "card-img-top" alt="..." >
+      {% endif %}      <div class="card-body">
+        <h5 class="card-title d-flex justify-content-center"> {{ users[8]['original_title'] }} </h5>
+        <p class="card-text d-flex justify-content-center"> <b> Genre - {{ users[8]['genre_ids'][0]  }} </b> </p>
+      </div>
+      <div class="card-footer">
+        <small class="text-muted d-flex justify-content-center">Released in {{ users[8]['release_date'] }}</small>
+      </div>
+    </div>
+  </div>
+</div>
+
+          {% endif %}
+      {% endif %}
+    {% endblock %}
+        </div>
+    </div>
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    -->
+  </body>
+</html>
