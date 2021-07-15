@@ -13,10 +13,33 @@
       integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
       crossorigin="anonymous"
     />
-
+    <style>
+      body{
+      background-image: url("./static/movie_recommender.png")
+    }
+    </style>
+    
     <title>Movie Recommender App</title>
   </head>
   <body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-danger">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">Movie Recommender App</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarScroll">
+      <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="https://github.com/SiddhantBhardwaj2018/Movie_Recommender_App">GitHub Repo</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
     <form for="{{url_for("index")}}" method = "post">
       <div
         class="container d-flex justify-content-center"
@@ -36,7 +59,7 @@
           <div class="d-flex justify-content-center">
             <button
               type="submit"
-              class="btn btn-primary"
+              class="btn btn-danger"
               style="margin-top: 1rem; width: 50%"
             >
               Submit
@@ -49,7 +72,7 @@
         style="margin-top: 5rem"> 
       {% block content %}
       {% if upcoming != "None" %}
-          <h1 class="panel d-flex justify-content-center">Upcoming Movies</h1>
+          <h1 class="panel d-flex justify-content-center" style="color: #ffffff">Upcoming Movies</h1>
  <div class="row row-cols-1 row-cols-md-3 g-4 panel">
   <div class="col" style="height: 20%">
     <div class="card h-50">
@@ -195,7 +218,7 @@
 </div>
       {% endif %}
       {% if users == "None1"  %}
-          <h1 class="panel d-flex justify-content-center">Sorry, we couldn't find any movies</h1> 
+          <h1 class="panel d-flex justify-content-center" style="color: #ffffff">Sorry, we couldn't find any movies</h1> 
       {% elif first != 'None' and users == 'None' %}
         <div class = "container d-flex justify-content-center">
           <div class="card mb-3" style="max-width: 540px;">
@@ -214,7 +237,7 @@
             </div>
           </div>
         </div>
-        <h1 class="panel d-flex justify-content-center">Recommended Movies</h1>
+        <h1 class="panel d-flex justify-content-center" style="color: #ffffff">Recommended Movies</h1>
  <div class="row row-cols-1 row-cols-md-3 g-4 panel">
   <div class="col" style="height: 20%">
     <div class="card h-50">
@@ -378,7 +401,7 @@
         </div>
         <div class = "container">
           {% if users|length() > 0 %}
-           <h1 class="panel d-flex justify-content-center">Recommended Movies</h1>
+           <h1 class="panel d-flex justify-content-center" style="color: #ffffff">Recommended Movies</h1>
  <div class="row row-cols-1 row-cols-md-3 g-4 panel">
   <div class="col" style="height: 20%">
     <div class="card h-100">
