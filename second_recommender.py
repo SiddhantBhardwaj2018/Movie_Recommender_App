@@ -27,9 +27,12 @@ class Second_Recommender:
         return [title for title in self.df['title'].iloc[movie_index]]
     
 def second_recommender(title,df = './dataset/second_final_data.csv'):
-    recommender = Second_Recommender(df = df)
-    matrice = recommender.count_vectorize()
-    cosine,indices = recommender.cosine_similarities(matrice)
-    recommendations = recommender.get_recommendations(title,cosine,indices)
-    return recommendations
+    try:
+        recommender = Second_Recommender(df = df)
+        matrice = recommender.count_vectorize()
+        cosine,indices = recommender.cosine_similarities(matrice)
+        recommendations = recommender.get_recommendations(title,cosine,indices)
+        return recommendations
+    except:
+        return "No Movies"
         

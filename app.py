@@ -35,6 +35,7 @@ def index():
         if len(response_1['results']) > 0:
             try:
                 res = second_recommender.second_recommender(response_1['results'][0]['original_title'])
+                print('Mutna')
                 if res == "No Movies":
                     movie_name = response_1['results'][0]
                     movie_name['release_date'] = movie_name['release_date'][:4]
@@ -50,6 +51,7 @@ def index():
                         i['release_date'] = i['release_date'][:4]
                     return render_template("index.html",users = "None",arr = arr,first = movie_name,upcoming = "None")
                 else:
+                    print('Chikna')
                     response = res
                     arr = []
                     for name in response:
