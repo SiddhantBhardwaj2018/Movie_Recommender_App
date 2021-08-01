@@ -69,20 +69,14 @@ def index():
                 actor = requests.get(f"http://api.themoviedb.org/3/search/person?query={name}&api_key=6dbe3c2b48ba7012390499fe4e59c6a4")
                 actor = actor.json()
                 if len(actor['results']) > 0:
-                    try:
-                        return actor_recommender(name)
-                    except:
-                        return render_template("500.html")
+                    return actor_recommender(name)
                 else:
                     return render_template("500.html")
         else:
             actor = requests.get(f"http://api.themoviedb.org/3/search/person?query={name}&api_key=6dbe3c2b48ba7012390499fe4e59c6a4")
             actor = actor.json()
             if len(actor['results']) > 0:
-                try:
-                    return actor_recommender(name)
-                except:
-                    return render_template("500.html")
+                return actor_recommender(name)
             else:
                 return render_template("index.html",users = "None1",first = "None",upcoming = "None")
     else:
@@ -96,47 +90,56 @@ def index():
         return render_template("index.html",users = "None",first = "None", upcoming = response)
     
 def actor_recommender(name):
-    google_search = requests.get(f"https://serpapi.com/search.json?engine=google&q={name}&api_key=27957cb0d044df28115a38f0dc6ffc6e2702d76f01f377832762c2ed9774be18")
+    api_key = "c16a381308bad8316c7da50f93273858c40ce3e19aee42379e0bed92bb7abe9a"
+    google_search = requests.get(f"https://serpapi.com/search.json?engine=google&q={name}&api_key={api_key}")
     google_search = google_search.json()
-    option_one = "movies"
-    option_two = "movies_and_tv_shows"
-    if option_one in google_search['knowledge_graph']:
-        movies = [i['name'] for i in google_search['knowledge_graph'][option_one]]
-    elif option_two in google_search['knowledge_graph']:
-        movies = [i['name'] for i in google_search['knowledge_graph'][option_two]]
-    co_actors = [i['name'] for i in google_search['knowledge_graph']['people_also_search_for']]
-    for co_actor in co_actors:
-        search = requests.get(f"https://serpapi.com/search.json?engine=google&q={co_actor}&api_key=27957cb0d044df28115a38f0dc6ffc6e2702d76f01f377832762c2ed9774be18")
-        search = search.json()
-        if 'type' in search['knowledge_graph']:
-            if 'actor' in search['knowledge_graph']['type'].lower() or 'actress' in search['knowledge_graph']['type'].lower():
-                if option_one in search['knowledge_graph']:
-                    movies += [j['name'] for j in search['knowledge_graph'][option_one]]
-                elif option_two in search['knowledge_graph']:
-                    movies += [j['name'] for j in search['knowledge_graph'][option_two]]
+    print(google_search)
+    if 'knowledge_graph' in google_search:
+        option_one = "movies"
+        option_two = "movies_and_tv_shows"
+        if option_one in google_search['knowledge_graph']:
+            movies = [i['name'] for i in google_search['knowledge_graph'][option_one]]
+        elif option_two in google_search['knowledge_graph']:
+            movies = [i['name'] for i in google_search['knowledge_graph'][option_two]]
+        co_actors = [i['name'] for i in google_search['knowledge_graph']['people_also_search_for']]
+        print(co_actors)
+        for co_actor in co_actors:
+            search = requests.get(f"https://serpapi.com/search.json?engine=google&q={co_actor}&api_key={api_key}")
+            search = search.json()
+            if 'knowledge_graph' in search and 'type' in search['knowledge_graph']:
+                print(co_actor)
+                if 'actor' in search['knowledge_graph']['type'].lower() or 'actress' in search['knowledge_graph']['type'].lower():
+                    if option_one in search['knowledge_graph'] and type(search['knowledge_graph'][option_one][0]) == dict:
+                        movies += [j['name'] for j in search['knowledge_graph'][option_one]]
+                    elif option_two in search['knowledge_graph'] and type(search['knowledge_graph'][option_two][0]) == dict:
+                        movies += [j['name'] for j in search['knowledge_graph'][option_two]]
+            else:
+                continue
+        arr = []
+        for i in movies:
+            res_2 = requests.get(f"https://api.themoviedb.org/3/search/movie?api_key=6dbe3c2b48ba7012390499fe4e59c6a4&query={i}")
+            res_2 = res_2.json()
+            if len(res_2['results']) > 0:
+                arr.append(res_2['results'][0])
+        for i in arr:
+            i['genre_ids'] = list(set(i['genre_ids']))
+            i['genre_ids'] = [genre_d[i['genre_ids'][j]] for j in range(len(i['genre_ids'])) ]
+            i['release_date'] = i['release_date'][:4]
+        movie_name = arr[0]
+        arr = arr[1:-1]
+        if len(arr) >= 9:
+            return render_template("index.html",users = arr,first = movie_name,upcoming = "None")
         else:
-            continue
-    arr = []
-    for i in movies:
-        res_2 = requests.get(f"https://api.themoviedb.org/3/search/movie?api_key=6dbe3c2b48ba7012390499fe4e59c6a4&query={i}")
-        res_2 = res_2.json()
-        if len(res_2['results']) > 0:
-            arr.append(res_2['results'][0])
-    print('Gotcha 2')
-    for i in arr:
-        i['genre_ids'] = list(set(i['genre_ids']))
-        i['genre_ids'] = [genre_d[i['genre_ids'][j]] for j in range(len(i['genre_ids'])) ]
-        i['release_date'] = i['release_date'][:4]
-    movie_name = arr[0]
-    arr = arr[1:-1]
-    print('Gotcha')
-    return render_template("index.html",users = arr,first = movie_name,upcoming = "None")
+            return render_template("index.html",users = "None",first = movie_name,arr = "None",upcoming = "None")
+    else:
+        return render_template("500.html")
    
-
+'''
 @app.route('/movie',methods=['GET'])
 def recommend_movies():
     res = recommendation.results(request.args.get('title'))
     return jsonify(res)
+'''
 
 @app.errorhandler(500)
 def page_not_found(e):
